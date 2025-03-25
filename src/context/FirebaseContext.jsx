@@ -78,8 +78,8 @@ const [uniqueLink, setUniqueLink]= useState('')
         imgUrl,
         createdAt: serverTimestamp(),
       });
-        setUniqueLink( `https://postcardnews.netlify.app//news/${newsRef.id}`);
-      // console.log('link:', window.location.origin);
+        setUniqueLink( `https://postcardnews.netlify.app/news/${newsRef.id}`);
+      console.log('link:', window.location.origin);
       // Add news to the user's profile in "users/{userId}/news"
       await setDoc(doc(firestoreDB, `users/${userName}/news`, newsRef.id), {
         headline,
