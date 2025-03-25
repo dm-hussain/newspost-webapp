@@ -1,0 +1,10 @@
+.bgColor{
+    background-color:  #1E3A8A !important;
+  
+ }
+
+ .bgColor * {
+    color: white;
+ }
+
+ 

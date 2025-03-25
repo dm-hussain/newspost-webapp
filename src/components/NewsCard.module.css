@@ -1,0 +1,31 @@
+.newsCard{
+
+    
+     max-width: 24rem
+}
+
+.newsCard img{
+
+    object-fit: cover;
+    height: 50%;
+}
+
+
+@media (min-width: 500px) and (max-width: 1024px){
+    
+        .newsCard{
+            
+            max-width: 18rem
+        }
+ 
+
+}
+
+@media (max-width: 500px){
+    .newsCard{
+        
+        max-width: 95%;
+    }
+    
+    
+}

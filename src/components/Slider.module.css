@@ -1,0 +1,15 @@
+.sliderImg{
+        min-height: 20rem !important;
+        object-fit: cover;
+}
+
+.sliderContainer{
+    margin-top: 7rem !important;
+}
+
+@media (max-width: 784px){
+    .sliderImg{
+        height: 20vh !important;
+        
+ }
+}
