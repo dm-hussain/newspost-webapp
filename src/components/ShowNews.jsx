@@ -24,14 +24,14 @@ function ShowNews( ) {
         <img
           src={showNews.imgUrl}
           alt={showNews.headline}
-          className=" img-fluid object-cover rounded-lg" style={{maxWidth: '30vw'}}
+          className="  object-cover rounded-lg " style={{maxWidth:'500px',  width: '80vw'}}
         />
       )}
 
       {/* News Content */}
-      <div className="my-4">
+      <div className="my-4 w-75 mx-auto">
         <h2 className="text-black ">{showNews.headline}</h2>
-        <p className=" text-secondary ">{showNews.body}</p>
+        <p className=" text-secondary  text-justify">{showNews.body}</p>
       </div>
 
       {/* Hashtags */}

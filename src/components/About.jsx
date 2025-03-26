@@ -7,7 +7,7 @@ function About() {
   return (
     <div 
     onClick={()=> setToggleNav(!toggleNav)}
-    className='container mgTop'>About</div>
+    className='container topMg'>About</div>
   )
 }
 

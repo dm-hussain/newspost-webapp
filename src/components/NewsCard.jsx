@@ -1,20 +1,22 @@
 import React from 'react';
 import styles from './NewsCard.module.css';
 import { NavLink } from 'react-router-dom';
+import logo from '../assets/logo.jpg'
 
 function NewsCard({ imgLink, headline, urlId }) {
+
   return (
     <NavLink
       to={`/news/${urlId}`}
       className={` ${styles.newsCard} card cursor-pointer d-flex `}
     >
-      <img src={imgLink} className={`  img-fluid  card-img-top`} alt={`img`} />
+      <img src={imgLink? imgLink : logo} className={`  img-fluid  card-img-top`} alt={`img`} />
       <div className="card-body  ">
         <p className="card-text fw-semibold fw-md-bolder">
           {headline}
-          <button type="button" className="btn btn-danger mx-auto ">
+          {/* <button type="button" className="btn btn-danger mx-auto ">
             Read more...
-          </button>
+          </button> */}
         </p>
       </div>
     </NavLink>

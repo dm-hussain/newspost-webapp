@@ -7,14 +7,12 @@ const NewsForm = () => {
   const [headline, setHeadLine] = useState('');
   const [body, setBody] = useState('');
   const [category, setCategory] = useState('');
-  const [smartHeadline, setSmartHeadLine] = useState('');
-  const [smartBody, setSmartBody] = useState('');
-  const [aiResponse, setAiResponse] = useState({});
+  // const [smartHeadline, setSmartHeadLine] = useState('');
+  // const [smartBody, setSmartBody] = useState('');
+  // const [aiResponse, setAiResponse] = useState({});
   const { putData, handleNewsSubmit } = useFirebaseContext();
-  useEffect(() => {
-    setBody(smartBody);
-    setHeadLine(smartHeadline);
-  }, [smartBody, smartHeadline]);
+
+  const [responseData, setResponseData] = useState('');
 
   const handleSmartNews = async () => {
     if (!headline || !body) {
@@ -66,23 +64,13 @@ const NewsForm = () => {
         const data = await response.json();
         console.log(data);
 
-        let responseData =
-          data.candidates[0].content.parts[0].text
-            .replace(/```json|```/g, '')
-            .trim() || '{}';
-        console.log(responseData);
-
-        console.log(JSON.parse(responseData));
-        setAiResponse(JSON.parse(responseData));
-
-        try {
-          console.log(aiResponse.headline);
-
-          setSmartHeadLine(aiResponse.headline);
-          setSmartBody(aiResponse.body);
-        } catch (error) {
-          console.log('JSON parsing error: ', error);
-        }
+        setResponseData(
+          JSON.parse(
+            data.candidates[0].content.parts[0].text
+              .replace(/```json|```/g, '')
+              .trim() || '{}'
+          )
+        );
       } catch (error) {
         console.error('Error fetching AI response:', error);
       }
@@ -91,6 +79,23 @@ const NewsForm = () => {
     // Function Call
     fetchGeminiAI();
   };
+
+  useEffect(() => {
+    console.log(responseData);
+     console.log('aiiiii');
+
+    try {
+ 
+      // setSmartHeadLine(aiResponse?.headline);
+      // setSmartBody(aiResponse?.body);
+      setBody(responseData?.body);
+      setHeadLine(responseData?.headline);
+    } catch (error) {
+      console.log('JSON parsing error: ', error);
+    }
+  }, [responseData]);
+
+ 
 
   const handleImages = (e) => {
     console.dir(e.target.files[0]);
@@ -138,7 +143,7 @@ const NewsForm = () => {
               </label>
               <input
                 onChange={(e) => setHeadLine(e.target.value)}
-                value={headline}
+                value={headline || ''}
                 className="w-100 py-1 form-control "
                 type="text"
                 id="title"
@@ -152,7 +157,7 @@ const NewsForm = () => {
               </label>
               <textarea
                 onChange={(e) => setBody(e.target.value)}
-                value={body}
+                value={body || ''}
                 rows="5"
                 className="form-control"
                 id="body"
@@ -177,7 +182,7 @@ const NewsForm = () => {
               <option value="entertainment">Entertainment</option>
             </select>
 
-            <div className="w-100 mb-4">
+            {/* <div className="w-100 mb-4">
               <label className="text-white" htmlFor="userImg">
                 Add Photos
               </label>
@@ -189,7 +194,7 @@ const NewsForm = () => {
                 id="userImg"
                 onChange={handleImages}
               />
-            </div>
+            </div> */}
 
             <div className="w-100 mb-4">
               <label className="text-white" htmlFor="imgUrl">

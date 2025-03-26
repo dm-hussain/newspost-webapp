@@ -6,15 +6,15 @@ function Footer() {
 
    const { loggedInData, setFormSubmitted } = useFirebaseContext();
   return (
-    <div className=" container-fluid fixed-bottom  "  >
+    <div className=" container-fluid fixed-bottom footer "  >
       <div className="container py-1 text-center  ">
-        <h5 className=' bg-info d-inline px-5 py-2 rounded-2 '>
+        <p className=' bg-warning d-inline rounded-2 '>
           want to share a news? 
           <Link 
           onClick={()=>   setFormSubmitted(false)}
           to={loggedInData ? "/newsForm" : "/login"}
           className='text-white text-decoration-none ' > Click Here </Link>
-        </h5>
+        </p>
       </div>
     </div>
   );

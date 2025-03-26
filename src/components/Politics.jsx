@@ -3,7 +3,7 @@ import CategoryWiseNews from './CategoryWiseNews'
 
 function Politics() {
   return (
-    <div className='container mgTop'>
+    <div className='container topMg'>
       <CategoryWiseNews category='politics' />
     </div>
   )

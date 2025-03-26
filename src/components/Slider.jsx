@@ -12,15 +12,23 @@ import 'swiper/css/navigation';
 // import required modules
 import { Navigation, Autoplay } from 'swiper/modules';
 import { LatestSliderContext } from '../contexts/LatestSliderContext';
+import { useFirebaseContext } from '../context/FirebaseContext';
+import { Link } from 'react-router-dom';
  
 
 export default function Slider() {
   const { latestNewsData } = useContext(LatestSliderContext);
 
+  const {allUsersNews} = useFirebaseContext()
+
+  const sliderContent= allUsersNews?.length >=5 ? allUsersNews : latestNewsData;
+  
+
   return (
-    <div className={`${styles.sliderContainer} container `}>
+    <div className={`${styles.sliderContainer} container   z-2 `  } >
+      {/* style={{top:'-30px', position-fixed left:'10%'}} */}
       <Swiper
-        className="mySwiper  "
+        className="mySwiper    "
         accordion="true"
         spaceBetween={50}
         slidesPerView={3}
@@ -37,31 +45,27 @@ export default function Slider() {
         loop={true}
         modules={[Navigation, Autoplay]}
       >
-        {latestNewsData.map((slide) => {
+        { sliderContent.map((slide) => {
           return (
             <SwiperSlide key={crypto.randomUUID()} className={` col-md-4 `}>
-              <div
+              <Link
+               to={`/news/${slide.id}`}
                 className={` cursor-pointer d-flex maxHeight position-relative  `}
               >
                 <img
-                  src={slide.imgLink}
+                  src={slide.imgUrl}
                   className={`  img-fluid  card-img-top object-fit-cover`}
                   alt={`img`}
                 />
                 <div className=" w-100   position-absolute start-50 translate-middle-x bottom-0  " 
                 style= { {backgroundColor: 'rgba(0, 0, 0, 0.4)'}} >
                   <p className=" text-white    ">
-                    {slide.title.substring(0, 50)} ....
+                    {slide.headline?.substring(0, 50)} ....
                   </p>
 
-                  {/* <div
-                    class="position-relative bg-dark p-3"
-                    style="background-color: rgba(0, 0, 0, 0.5) !important;"
-                  >
-                    <p class="text-white">This paragraph has 100% opacity!</p>
-                  </div> */}
+                 
                 </div>
-              </div>
+              </Link>
             </SwiperSlide>
           );
         })}

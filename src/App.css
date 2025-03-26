@@ -64,6 +64,13 @@ body{
 
 .maxHeight{
   max-height: 30vh;
+ 
+}
+
+.maxHeight img{
+  min-height: 30vh;
+  
+  object-fit: cover;
 }
 
 .newsForm{
@@ -71,4 +78,23 @@ body{
   overflow-y: auto !important;
 }
 
+ .footer div p{
+  max-width: 90vw;
+  padding: .5rem 2rem;
+ }
+
+ .text-justify {
+  text-align: justify;
+}
+
+.topMg{
+  margin-top: 5rem;
+}
+
+
+@media (max-width: 540px){
+  .mgTop{
+    margin-top: 2rem;
+  }
  
+}
