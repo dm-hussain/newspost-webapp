@@ -14,15 +14,16 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import { LatestSliderContext } from '../contexts/LatestSliderContext';
 import { useFirebaseContext } from '../context/FirebaseContext';
 import { Link } from 'react-router-dom';
- 
+import Loader from './Loader';
+import logo from '../assets/logo.jpg'
 
 export default function Slider() {
-  const { latestNewsData } = useContext(LatestSliderContext);
-
+ 
+  // const { latestNewsData } = useContext(LatestSliderContext);
+  // const sliderContent= allUsersNews?.length >=5 ? allUsersNews : latestNewsData;
+  
   const {allUsersNews} = useFirebaseContext()
 
-  const sliderContent= allUsersNews?.length >=5 ? allUsersNews : latestNewsData;
-  
 
   return (
     <div className={`${styles.sliderContainer} container   z-2 `  } >
@@ -45,7 +46,7 @@ export default function Slider() {
         loop={true}
         modules={[Navigation, Autoplay]}
       >
-        { sliderContent.map((slide) => {
+        {!allUsersNews ? <Loader /> :  allUsersNews.map((slide) => {
           return (
             <SwiperSlide key={crypto.randomUUID()} className={` col-md-4 `}>
               <Link
@@ -53,7 +54,7 @@ export default function Slider() {
                 className={` cursor-pointer d-flex maxHeight position-relative  `}
               >
                 <img
-                  src={slide.imgUrl}
+                  src={slide.imgUrl ? slide.imgUrl : logo}
                   className={`  img-fluid  card-img-top object-fit-cover`}
                   alt={`img`}
                 />

@@ -14,7 +14,7 @@ function ShowNews( ) {
   return (
     <div className="mgTop d-flex min-vh-100 justify-content-center align-items-start text-center">
       {!showNews ? (
-        <Loader />
+        <Loader marginTop={{marginTop: '5rem'}} />
       ) : (
         <div className="mgTop container text-white">
            

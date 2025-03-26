@@ -51,7 +51,7 @@ function SignUp() {
             </label>
 
         </div>   */}
-            <label>
+            {/* <label>
               <input
                 className={`${styles.input}`}
                 type="text"
@@ -63,9 +63,9 @@ function SignUp() {
                 value={userData.name || ''}
               />
               <span>Name</span>
-            </label>
+            </label> */}
 
-            <label>
+            {/* <label>
               <input
                 className={`${styles.input}`}
                 type="email"
@@ -77,9 +77,9 @@ function SignUp() {
                 value={userData.email || ''}
               />
               <span>Email</span>
-            </label>
+            </label> */}
 
-            <label>
+            {/* <label>
               <input
                 className={`${styles.input}`}
                 type="password"
@@ -91,7 +91,7 @@ function SignUp() {
                 value={userData.password || ''}
               />
               <span>Password</span>
-            </label>
+            </label> */}
             {/* <label>
           <input
             className={`${styles.input}`}
@@ -102,11 +102,11 @@ function SignUp() {
           <span>Mobile</span>
         </label> */}
 
-            <button type="submit" className={`${styles.submit}`}>
+            {/* <button type="submit" className={`${styles.submit}`}>
               Submit
-            </button>
-            <p className={`${styles.p} ${styles.line} `}>Or Sign Up With</p>
-            <div className={`${styles['flex-row']} `}>
+            </button> */}
+            <p className={`${styles.p} ${styles.line} `}> Sign Up With</p>
+            <div className={`  ${styles['flex-row']} `}>
               <button
                 onClick={() => {
                   signupWithGoogle();
@@ -117,10 +117,10 @@ function SignUp() {
                 <FcGoogle />
                 Google
               </button>
-              <button type="button" className={`${styles.btn} `}>
+              {/* <button type="button" className={`${styles.btn} `}>
                 <FaFacebook />
                 Facebook
-              </button>
+              </button> */}
             </div>
             <p className={`${styles.signin}`}>
               Already have an account ? <Link to="/login"> Sign in </Link>

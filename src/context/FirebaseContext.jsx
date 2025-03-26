@@ -61,12 +61,13 @@ export const FirebaseProvider = ({ children }) => {
   };
 
   const putData = (key, data) => set(ref(db, key), data);
-const [uniqueLink, setUniqueLink]= useState('')
+  const [uniqueLink, setUniqueLink] = useState('');
   const handleNewsSubmit = async (headline, body, imgUrl, category) => {
     if (!auth.currentUser) return alert('You must be logged in!');
 
     const userId = auth.currentUser.uid;
     const userName = auth.currentUser.displayName || userId;
+
     try {
       // Add news to the "news" collection
       const newsRef = await addDoc(collection(firestoreDB, 'news'), {
@@ -78,7 +79,7 @@ const [uniqueLink, setUniqueLink]= useState('')
         imgUrl,
         createdAt: serverTimestamp(),
       });
-        setUniqueLink( `https://postcardnews.netlify.app/news/${newsRef.id}`);
+      setUniqueLink(`https://postcardnews.netlify.app/news/${newsRef.id}`);
       console.log('link:', window.location.origin);
       // Add news to the user's profile in "users/{userId}/news"
       await setDoc(doc(firestoreDB, `users/${userName}/news`, newsRef.id), {
@@ -97,9 +98,6 @@ const [uniqueLink, setUniqueLink]= useState('')
       console.error('Error posting news:', error);
     }
   };
-
- 
-
 
   const signupWithGoogle = () => {
     signInWithPopup(auth, provider)
@@ -219,6 +217,12 @@ const [uniqueLink, setUniqueLink]= useState('')
     }
   };
 
+ 
+
+  // Upload to imgur...............
+
+
+
   useEffect(() => {
     userLoginStatus();
   }, [loggedInData]);
@@ -248,7 +252,8 @@ const [uniqueLink, setUniqueLink]= useState('')
         showNews,
         formSubmitted,
         setFormSubmitted,
-        uniqueLink
+        uniqueLink,
+       
       }}
     >
       {children}

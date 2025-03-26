@@ -43,7 +43,7 @@ const Form = () => {
             <div className="form-container ">
               <p className={`${styles.title}`}>Login </p>
 
-              <form onSubmit={handleSubmit} className="form">
+              {/* <form onSubmit={handleSubmit} className="form">
                 <div className="input-group">
                   <label htmlFor="username">Email</label>
                   <input
@@ -84,7 +84,7 @@ const Form = () => {
                   </div>
                 </div>
                 <button className="sign">Sign in</button>
-              </form>
+              </form> */}
               <div className="social-message">
                 <div className="line" />
                 <p className="message">Login with google account</p>
@@ -96,9 +96,10 @@ const Form = () => {
                     signupWithGoogle();
                   }}
                   aria-label="Log in with Google"
-                  className="icon cursor-pointer"
+                  className={`${styles.btn} mb-2 `}
                 >
                   <FcGoogle size={35} />
+                  <span className='text-white mx-2 '>Google</span>
                 </button>
               </div>
               <p className="signup">

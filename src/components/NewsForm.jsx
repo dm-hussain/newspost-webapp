@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useFirebaseContext } from '../context/FirebaseContext';
 import GoogleLogin from './GoogleLogin';
 import ShareBtn from './ShareBtn';
+import supabase from '../util/supabse';
+
 const NewsForm = () => {
   // const newsData= useState({})
   const [headline, setHeadLine] = useState('');
   const [body, setBody] = useState('');
   const [category, setCategory] = useState('');
-  // const [smartHeadline, setSmartHeadLine] = useState('');
-  // const [smartBody, setSmartBody] = useState('');
-  // const [aiResponse, setAiResponse] = useState({});
   const { putData, handleNewsSubmit } = useFirebaseContext();
 
   const [responseData, setResponseData] = useState('');
@@ -36,7 +35,7 @@ const NewsForm = () => {
                     {
                       text: `The following news is written in a specific language. 
                           
-                          **Please detect the language of this news and **ensure that the rewritten news is in the same language**. 
+                          Please detect the language of this news and **ensure that the rewritten news is in the same language**. 
                            **Headline:** ${headline}  
                            **Body:** ${body}  
         
@@ -81,13 +80,7 @@ const NewsForm = () => {
   };
 
   useEffect(() => {
-    console.log(responseData);
-     console.log('aiiiii');
-
     try {
- 
-      // setSmartHeadLine(aiResponse?.headline);
-      // setSmartBody(aiResponse?.body);
       setBody(responseData?.body);
       setHeadLine(responseData?.headline);
     } catch (error) {
@@ -95,30 +88,80 @@ const NewsForm = () => {
     }
   }, [responseData]);
 
- 
+  // Handle image upload............
+
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+  // const [imageUrl, setImageUrl] = useState(''); // Store uploaded image URL
+
+  const [file, setFile] = useState(null);
 
   const handleImages = (e) => {
-    console.dir(e.target.files[0]);
+    console.log(e);
+    if (e.target.files[0]) setFile(e.target.files[0]);
+    // const uploadedImageUrl= await uploadToSupabase(file)
+    // console.log(uploadedImageUrl);
   };
 
   const [imgUrl, setImgUrl] = useState('');
-  const handleImgUrl = (e) => {
-    setImgUrl(e.target.value);
+  const uploadToSupabase = async () => {
+    // if (!file) {
+    //   alert('Please select an image first');
+    //   return null;
+    // }
+
+    const imageName = `${Date.now()}-${file.name}`;
+
+    // 📌 Upload Image to Supabase Storage
+    const { data, error } = await supabase.storage
+      .from('images')
+      .upload(imageName, file);
+
+    if (error) {
+      console.error('Upload failed:', error.message);
+      return null;
+    }
+
+    // 📌 Get the Public URL
+    const { data: publicUrlData } = supabase.storage
+      .from('images')
+      .getPublicUrl(imageName);
+
+    const imageUrl = publicUrlData.publicUrl;
+    console.log('Image URL:', imageUrl);
+    return imageUrl;
   };
 
-  const handlePostNews = () => {
-    if (!headline || !body || !category)
-      return alert('Plz enter headline, body and category of news properly');
+  // url select option of image
+  // const [imgUrl, setImgUrl] = useState('');
+  // const handleImgUrl = (e) => {
+  //   setImgUrl(e.target.value);
+  // };
+
+  // handle submit post.........
+
+  const handlePostNews = async () => {
+    if (!headline || !body || !category || file)
+      return alert(
+        'Plz enter headline, body, image and category of news properly'
+      );
+
+    const imgUrl = await uploadToSupabase();
+    console.log(imgUrl);
+    setImgUrl(imgUrl);
+
     putData('users/' + crypto.randomUUID(), {
       headline,
       body,
       imgUrl,
       category,
     });
+
     handleNewsSubmit(headline, body, imgUrl, category);
     setBody('');
     setHeadLine('');
-    setImgUrl('');
+    // setImgUrl('');
   };
 
   const { loggedInData, formSubmitted } = useFirebaseContext();
@@ -182,11 +225,12 @@ const NewsForm = () => {
               <option value="entertainment">Entertainment</option>
             </select>
 
-            {/* <div className="w-100 mb-4">
+            <div className="w-100 mb-4">
               <label className="text-white" htmlFor="userImg">
-                Add Photos
+                Add Photo
               </label>
               <input
+                // value={imgUrl}
                 className="w-100 py-1 form-control "
                 type="file"
                 multiple
@@ -194,11 +238,11 @@ const NewsForm = () => {
                 id="userImg"
                 onChange={handleImages}
               />
-            </div> */}
+            </div>
 
-            <div className="w-100 mb-4">
+            {/* <div className="w-100 mb-4">
               <label className="text-white" htmlFor="imgUrl">
-                Paste Image URL
+                Image URL
               </label>
               <input
                 className="w-100 py-1 form-control "
@@ -207,8 +251,9 @@ const NewsForm = () => {
                 accept="image/*"
                 id="imgUrl"
                 onChange={handleImgUrl}
+                placeholder="Paste here related Image URL"
               />
-            </div>
+            </div> */}
 
             <div className="d-flex gap-4 justify-content-between justify-content-md-start  ">
               <button
@@ -234,3 +279,5 @@ const NewsForm = () => {
 };
 
 export default NewsForm;
+
+//

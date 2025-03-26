@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Loader = () => {
+const Loader = ({marginTop}) => {
   return (
     <StyledWrapper>
-      <div className="loader topMg">
+      <div className="loader  mx-auto" style={marginTop}>
         <div>
           <ul>
             <li>
