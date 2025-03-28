@@ -6,17 +6,21 @@ import { FirebaseProvider } from './context/FirebaseContext';
 import { useState } from 'react';
  
 
+
+
 function App() {
 
   const[toggleNav, setToggleNav]= useState(false)
 
 
   return (
+    
     <FirebaseProvider>
       <Header toggleNav={toggleNav} setToggleNav={setToggleNav} />
       <Outlet context={{toggleNav, setToggleNav}} />
       <Footer />
     </FirebaseProvider>
+     
   );
 }
 

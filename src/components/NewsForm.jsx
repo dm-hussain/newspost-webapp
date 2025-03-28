@@ -3,6 +3,7 @@ import { useFirebaseContext } from '../context/FirebaseContext';
 import GoogleLogin from './GoogleLogin';
 import ShareBtn from './ShareBtn';
 import supabase from '../util/supabse';
+import NewsArticle from './NewsArticle';
 
 const NewsForm = () => {
   // const newsData= useState({})
@@ -61,7 +62,7 @@ const NewsForm = () => {
         );
 
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
 
         setResponseData(
           JSON.parse(
@@ -98,7 +99,7 @@ const NewsForm = () => {
   const [file, setFile] = useState(null);
 
   const handleImages = (e) => {
-    console.log(e);
+    // console.log(e);
     if (e.target.files[0]) setFile(e.target.files[0]);
     // const uploadedImageUrl= await uploadToSupabase(file)
     // console.log(uploadedImageUrl);
@@ -129,7 +130,7 @@ const NewsForm = () => {
       .getPublicUrl(imageName);
 
     const imageUrl = publicUrlData.publicUrl;
-    console.log('Image URL:', imageUrl);
+    // console.log('Image URL:', imageUrl);
     return imageUrl;
   };
 
@@ -142,13 +143,15 @@ const NewsForm = () => {
   // handle submit post.........
 
   const handlePostNews = async () => {
-    if (!headline || !body || !category || file)
+    // console.log(headline, body, category, file);
+    
+    if (!headline || !body || !category || !file)
       return alert(
         'Plz enter headline, body, image and category of news properly'
       );
 
     const imgUrl = await uploadToSupabase();
-    console.log(imgUrl);
+    // console.log(imgUrl);
     setImgUrl(imgUrl);
 
     putData('users/' + crypto.randomUUID(), {
@@ -174,8 +177,22 @@ const NewsForm = () => {
         </div>
       ) : formSubmitted ? (
         <ShareBtn newsUrl={imgUrl} headline={headline} />
+        // <NewsArticle article={showNews} id={id.id} />
+
       ) : (
         <div className=" container mgTop px-4   ">
+
+<h2 className='text-info '>Disclaimer</h2>
+<p className=' text-warning text-justify lowestFontSize'>   
+ The news content published on our platform is 
+  entirely the responsibility of the content creator. Any misinformation, 
+  false news, or incorrect details shared by users will be solely their liability. 
+  We do not take responsibility for any misleading or inaccurate content published by users. 
+  We strongly encourage everyone to share only verified and truthful news to 
+  maintain the integrity of our platform.
+  
+  </p> 
+
           <form
             className=" mx-auto p-3 rounded-3 w-100  w-md-75 border border-primary  "
             action=""

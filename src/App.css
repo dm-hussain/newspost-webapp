@@ -102,5 +102,8 @@ body{
   .mgTop{
     margin-top: 2rem;
   }
+  .lowestFontSize{
+    font-size: x-small;
+  }
  
 }

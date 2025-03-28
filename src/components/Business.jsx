@@ -7,7 +7,7 @@ function Business() {
   const { toggleNav, setToggleNav } = useOutletContext();
 
   return (
-    <div onClick={() => setToggleNav(!toggleNav)} className="container mgTop">
+    <div onClick={() => setToggleNav(!toggleNav)} className="container topMg">
       <CategoryWiseNews category="business" />
     </div>
   );

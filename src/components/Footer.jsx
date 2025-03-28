@@ -17,7 +17,7 @@ function Footer() {
           <Link 
           onClick={()=>   setFormSubmitted(false)}
           to={loggedInData ? "/newsForm" : "/login"}
-          className='text-white text-decoration-none ' > Click Here </Link>
+          className=' text-black text-decoration-none fw-bold  ' >  Click Here </Link>
         </p>
       </div>
     </div>

@@ -2,14 +2,19 @@ import React, { useEffect } from 'react';
 import { useFirebaseContext } from '../context/FirebaseContext';
 import { useParams } from 'react-router-dom';
 import Loader from './Loader';
+import ShareBtn from './ShareBtn';
+import NewsArticle from './NewsArticle';
 
 function ShowNews( ) {
   const id = useParams();
   const { getNewsData, showNews } = useFirebaseContext();
- 
+
+
+
+
   useEffect(() => {
     getNewsData(id);
-  }, []);
+  }, [id]);
 
   return (
     <div className="mgTop d-flex min-vh-100 justify-content-center align-items-start text-center">
@@ -29,7 +34,7 @@ function ShowNews( ) {
       )}
 
       {/* News Content */}
-      <div className="my-4 w-75 mx-auto">
+      <div className="my-4 w-100 mx-auto">
         <h2 className="text-black ">{showNews.headline}</h2>
         <p className=" text-secondary  text-justify">{showNews.body}</p>
       </div>
@@ -47,6 +52,8 @@ function ShowNews( ) {
           ))}
         </div>
       )}
+      {/* <ShareBtn  /> */}
+      <NewsArticle article={showNews} id={id.id} />
     </div>
         </div>
       )}

@@ -23,6 +23,7 @@ import {
   where,
 } from 'firebase/firestore';
 import ShareBtn from '../components/ShareBtn';
+import { useNavigate } from 'react-router-dom';
 const firebaseConfig = {
   apiKey: 'AIzaSyAfi72gNU3UpVAkSAph8u0mJLrUsr-speg',
   authDomain: 'news-app-9015b.firebaseapp.com',
@@ -80,7 +81,7 @@ export const FirebaseProvider = ({ children }) => {
         createdAt: serverTimestamp(),
       });
       setUniqueLink(`https://postcardnews.netlify.app/news/${newsRef.id}`);
-      console.log('link:', window.location.origin);
+      // console.log('link:', window.location.origin);
       // Add news to the user's profile in "users/{userId}/news"
       await setDoc(doc(firestoreDB, `users/${userName}/news`, newsRef.id), {
         headline,
@@ -136,15 +137,16 @@ export const FirebaseProvider = ({ children }) => {
     });
   };
 
+  const navigate = useNavigate();  
+
   const handleSignOut = () => {
+
     signOut(auth)
       .then(() => {
-        // setLoggedInData({isLogged: false, userData: null})
-        // Sign-out successful.
         setLoggedInData(null);
+        navigate('/')
       })
       .catch((error) => {
-        // An error happened.
         console.log(error);
       });
   };
@@ -253,6 +255,7 @@ export const FirebaseProvider = ({ children }) => {
         formSubmitted,
         setFormSubmitted,
         uniqueLink,
+        setUniqueLink
        
       }}
     >
