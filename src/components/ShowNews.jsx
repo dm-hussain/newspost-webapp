@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFirebaseContext } from '../context/FirebaseContext';
 import { useParams } from 'react-router-dom';
 import Loader from './Loader';
@@ -6,15 +6,27 @@ import ShareBtn from './ShareBtn';
 import NewsArticle from './NewsArticle';
 
 function ShowNews( ) {
-  const id = useParams();
-  const { getNewsData, showNews } = useFirebaseContext();
+ 
+  const { getNewsData, showNews, uniqueLink } = useFirebaseContext();
+  
+  const newsId= uniqueLink ? uniqueLink.split('news/')[1] : null;
+  // console.log('NewsId:',  newsId, 'link', uniqueLink)
+  const { id: paramId }  = useParams() ;
+  // const id= paramId || newsId;
+ 
+
+const [id, setId]= useState('')
 
 
+  useEffect(()=>{
+    console.log('newsId', newsId, 'id', id, "showNews", showNews);
 
+    setId(paramId || newsId)
 
-  useEffect(() => {
-    getNewsData(id);
-  }, [id]);
+  }, [id])
+
+  console.log('newsId', newsId, 'id', id, "showNews", showNews);
+
 
   return (
     <div className="mgTop d-flex min-vh-100 justify-content-center align-items-start text-center">
@@ -53,7 +65,7 @@ function ShowNews( ) {
         </div>
       )}
       {/* <ShareBtn  /> */}
-      <NewsArticle article={showNews} id={id.id} />
+      <NewsArticle article={showNews} id={id} />
     </div>
         </div>
       )}

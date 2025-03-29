@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useFirebaseContext } from '../context/FirebaseContext';
 import { FaShare } from "react-icons/fa";
 
-const ShareBtn = ({headline}) => {
-   const {uniqueLink} = useFirebaseContext()
- 
+const ShareBtn = () => {
+   const {uniqueLink } = useFirebaseContext()
+     
+
     const handleShareClick=()=>{
 
         if (navigator.share) {

@@ -4,9 +4,11 @@ import GoogleLogin from './GoogleLogin';
 import ShareBtn from './ShareBtn';
 import supabase from '../util/supabse';
 import NewsArticle from './NewsArticle';
+import ShowNews from './ShowNews';
+import MiniLoader from './MiniLoader';
 
 const NewsForm = () => {
-  // const newsData= useState({})
+  // const showNews= useState({})
   const [headline, setHeadLine] = useState('');
   const [body, setBody] = useState('');
   const [category, setCategory] = useState('');
@@ -107,11 +109,6 @@ const NewsForm = () => {
 
   const [imgUrl, setImgUrl] = useState('');
   const uploadToSupabase = async () => {
-    // if (!file) {
-    //   alert('Please select an image first');
-    //   return null;
-    // }
-
     const imageName = `${Date.now()}-${file.name}`;
 
     // 📌 Upload Image to Supabase Storage
@@ -144,7 +141,7 @@ const NewsForm = () => {
 
   const handlePostNews = async () => {
     // console.log(headline, body, category, file);
-    
+
     if (!headline || !body || !category || !file)
       return alert(
         'Plz enter headline, body, image and category of news properly'
@@ -167,7 +164,18 @@ const NewsForm = () => {
     // setImgUrl('');
   };
 
-  const { loggedInData, formSubmitted } = useFirebaseContext();
+  const { loggedInData, formSubmitted, uniqueLink, getNewsData } = useFirebaseContext();
+  // console.log(formSubmitted);
+  
+  const [newsId, setNewsId] = useState()
+  useEffect(() => {
+
+    setNewsId(uniqueLink.split('news/')[1])
+    newsId && getNewsData(newsId)
+   
+  }, [uniqueLink]);
+  
+ console.log('NewsId:', newsId, 'link', uniqueLink);
 
   return (
     <div className="min-vh-100 mgTop d-flex justify-content-center align-items-center">
@@ -176,22 +184,24 @@ const NewsForm = () => {
           <GoogleLogin />
         </div>
       ) : formSubmitted ? (
-        <ShareBtn newsUrl={imgUrl} headline={headline} />
-        // <NewsArticle article={showNews} id={id.id} />
-
+        newsId ? (
+          
+          <NewsArticle article={{ headline, body, imgUrl }} id={newsId} />
+        ) : (
+          <MiniLoader />
+        )
       ) : (
         <div className=" container mgTop px-4   ">
-
-<h2 className='text-info '>Disclaimer</h2>
-<p className=' text-warning text-justify lowestFontSize'>   
- The news content published on our platform is 
-  entirely the responsibility of the content creator. Any misinformation, 
-  false news, or incorrect details shared by users will be solely their liability. 
-  We do not take responsibility for any misleading or inaccurate content published by users. 
-  We strongly encourage everyone to share only verified and truthful news to 
-  maintain the integrity of our platform.
-  
-  </p> 
+          <h2 className="text-info ">Disclaimer</h2>
+          <p className=" text-warning text-justify lowestFontSize">
+            The news content published on our platform is entirely the
+            responsibility of the content creator. Any misinformation, false
+            news, or incorrect details shared by users will be solely their
+            liability. We do not take responsibility for any misleading or
+            inaccurate content published by users. We strongly encourage
+            everyone to share only verified and truthful news to maintain the
+            integrity of our platform.
+          </p>
 
           <form
             className=" mx-auto p-3 rounded-3 w-100  w-md-75 border border-primary  "

@@ -153,7 +153,7 @@ export const FirebaseProvider = ({ children }) => {
 
   // Get single news data
   const [showNews, setShowNews] = useState(null);
-  const getNewsData = async ({ id }) => {
+  const getNewsData = async (id) => {
     const ref = doc(firestoreDB, 'news', id);
 
     const snap = await getDoc(ref);
